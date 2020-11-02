@@ -92,7 +92,6 @@ class User extends Component {
   };
 
   render() {
-    console.log(this.state.userData);
     const loading = this.state.isLoading;
 
     return (
