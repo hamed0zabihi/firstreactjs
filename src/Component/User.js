@@ -14,6 +14,7 @@ import {
   CardBody,
   CardTitle,
   CardImg,
+  Badge,
 } from "reactstrap";
 
 class User extends Component {
@@ -30,11 +31,15 @@ class User extends Component {
   //lifecycle
 
   componentWillMount() {
-    console.log("iddddd:", process.env.REACT_APP_CLIENT_ID);
-    axios.get("https://api.github.com/users").then((response) => {
-      const data1 = response.data;
-      this.setState({ userData: [...data1.splice(0, 30)], isLoading: true });
-    });
+    axios
+      .get("https://api.github.com/users")
+      .then((response) => {
+        const data1 = response.data;
+        this.setState({ userData: [...data1.splice(0, 30)], isLoading: true });
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
   }
 
   handleCreateUser = (event) => {
@@ -46,12 +51,10 @@ class User extends Component {
     event.preventDefault();
     const value = this.state.creatUser;
     const objectNew = Object.assign({
-      userId: value,
       id: Math.ceil(Math.random() * 100 + 50),
       login: value,
+      type: "user",
       avatar_url: "https://picsum.photos/200/200",
-      body:
-        "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit",
     });
 
     const userDataold = [...this.state.userData, objectNew];
@@ -71,6 +74,9 @@ class User extends Component {
         this.setState({
           isLoading: true,
         });
+      })
+      .catch((error) => {
+        console.log(error.response);
       });
   };
   //submit
@@ -83,7 +89,6 @@ class User extends Component {
     axios
       .delete(`https://jsonplaceholder.typicode.com/users/${ids}`)
       .then((response) => {
-        console.log("delete", response);
         this.setState({ isLoading: true });
       })
       .catch((error) => {
@@ -99,7 +104,7 @@ class User extends Component {
         <Form row>
           <FormGroup row>
             <Label for="exampleSearch" sm={2}>
-              Email
+              name
             </Label>
             <Col sm={10}>
               <Input
@@ -127,7 +132,7 @@ class User extends Component {
             >
               <ListUser
                 sm={12}
-                md={6}
+                md={8}
                 lg={3}
                 users={this.state.userData}
                 handleDeleteUser={this.handleDeleteUser}
@@ -148,7 +153,7 @@ const ListUser = ({ users, handleDeleteUser }) => {
   {
     return users.map((user, index) => {
       return (
-        <Col key={index} sm={12} md={6} lg={3}>
+        <Col key={index} sm={12} md={8} lg={3}>
           <Card>
             <CardBody>
               <CardTitle>{user.login}</CardTitle>
@@ -156,9 +161,13 @@ const ListUser = ({ users, handleDeleteUser }) => {
             <CardImg top src={user.avatar_url} alt="Card image cap" />
             <CardBody>
               <CardText>
-                user id:{user.id}
+                <i className="fa fa-id-card"></i>
                 <br />
-                user type:{user.type}
+                <Badge color="info">{user.id}</Badge>
+                <br />
+                <i className="fa fa-user"></i>
+                <br />
+                {user.type}
               </CardText>
               <Button onClick={() => handleDeleteUser(user.id)} color="danger">
                 <i className="fa fa-trash"></i>
