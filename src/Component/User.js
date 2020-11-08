@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import LoadingSpinner from "./LoadingSpinner";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 import {
   Form,
@@ -158,7 +159,9 @@ const ListUser = ({ users, handleDeleteUser }) => {
             <CardBody>
               <CardTitle>{user.login}</CardTitle>
             </CardBody>
-            <CardImg top src={user.avatar_url} alt="Card image cap" />
+            <Link to={"/user/" + user.login}>
+              <CardImg top src={user.avatar_url} alt="Card image cap" />
+            </Link>
             <CardBody>
               <CardText>
                 <i className="fa fa-id-card"></i>
