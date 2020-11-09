@@ -21,6 +21,7 @@ class CatalaogUser extends React.Component {
       id: "",
       name: "",
       data: [],
+      redirect: null,
     };
   }
   //lifecycle
@@ -31,11 +32,12 @@ class CatalaogUser extends React.Component {
       .get(`https://api.github.com/users/${name1}`)
       .then((Response) => {
         const data1 = Response.data;
-        this.setState({ data: data1 });
+        this.setState({ data: data1, redirect: true });
         console.log(data1);
       })
       .catch((error) => {
         console.log(error.response);
+        this.setState({ redirect: null });
       });
   }
   // console.log(user.data);
@@ -65,7 +67,7 @@ class CatalaogUser extends React.Component {
                 <CardTitle tag="h5">{this.state.data.login}</CardTitle>
                 {location ? (
                   <CardText>
-                    <i className="fa fa-id-card"></i> location:
+                    <i className="fa fa-map-marker"></i> location:
                     {location}
                   </CardText>
                 ) : (
@@ -73,7 +75,7 @@ class CatalaogUser extends React.Component {
                 )}
                 {created ? (
                   <CardText>
-                    <i className="fa fa-id-card"></i> created: {created}
+                    <i className="fa fa-calendar"></i> created: {created}
                   </CardText>
                 ) : (
                   ""
@@ -81,7 +83,7 @@ class CatalaogUser extends React.Component {
 
                 {company ? (
                   <CardText>
-                    <i className="fa fa-id-card"></i> company:
+                    <i className="fa fa-institution"></i> company:
                     {company}
                   </CardText>
                 ) : (
@@ -89,7 +91,7 @@ class CatalaogUser extends React.Component {
                 )}
                 {followers ? (
                   <CardText>
-                    <i className="fa fa-id-card"></i> followers:
+                    <i className="fa fa-users"></i> followers:
                     {followers}
                   </CardText>
                 ) : (
@@ -97,7 +99,7 @@ class CatalaogUser extends React.Component {
                 )}
                 {following ? (
                   <CardText>
-                    <i className="fa fa-id-card"></i> following:
+                    <i className="fa fa-user-plus"></i> following:
                     {following}
                   </CardText>
                 ) : (
@@ -114,6 +116,7 @@ class CatalaogUser extends React.Component {
                 {" "}
                 go home
               </a>
+              {/* <Redirect to={this.state.redirect} /> */}
             </Alert>
           </div>
         )}
