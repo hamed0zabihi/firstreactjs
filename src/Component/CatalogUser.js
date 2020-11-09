@@ -115,8 +115,6 @@ class CatalaogUser extends React.Component {
                 go home
               </a>
             </Alert>
-            <LoadingSpinner />
-            <Redirect from="*" to="/" />
           </div>
         )}
       </div>

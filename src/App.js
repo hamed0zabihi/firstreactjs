@@ -14,7 +14,7 @@ function App() {
           <Route exact path="/">
             <User />
           </Route>
-          <Route path="/user/:name" component={CatalogUser}></Route>
+          <Route path="/user/:name" component={CatalogUser} />
         </Switch>
       </BrowserRouter>
     </div>
