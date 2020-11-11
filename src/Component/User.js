@@ -96,6 +96,20 @@ class User extends Component {
         console.log(error.response);
       });
   };
+  sortArray = (av) => {
+    const bands = this.state.userData;
+    if (av === "a-z") {
+      bands.sort((a, b) => a["login"].toLowerCase() > b["login"].toLowerCase());
+      this.setState({ userData: bands });
+    } else {
+      bands.sort((a, b) => a["login"].toLowerCase() < b["login"].toLowerCase());
+      this.setState({ userData: bands });
+    }
+
+    console.log("first:", this.state.userData);
+    console.log("second:", bands);
+    console.log("av:", av);
+  };
 
   render() {
     const loading = this.state.isLoading;
@@ -123,21 +137,37 @@ class User extends Component {
         </Form>
         <div>
           {loading ? (
-            <div
-              style={{
-                display: "flex",
-                "flex-wrap": "wrap",
-                "align-items": "flex-start",
-                "align-self": " center",
-              }}
-            >
-              <ListUser
-                sm={12}
-                md={8}
-                lg={3}
-                users={this.state.userData}
-                handleDeleteUser={this.handleDeleteUser}
-              />
+            <div>
+              <div>
+                <FormGroup>
+                  <Label for="exampleSelect">Select</Label>
+                  <Input
+                    type="select"
+                    name="select"
+                    id="exampleSelect"
+                    onChange={(e) => this.sortArray(e.target.value)}
+                  >
+                    <option>a-z</option>
+                    <option>z-a</option>
+                  </Input>
+                </FormGroup>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  "flex-wrap": "wrap",
+                  "align-items": "flex-start",
+                  "align-self": " center",
+                }}
+              >
+                <ListUser
+                  sm={12}
+                  md={8}
+                  lg={3}
+                  users={this.state.userData}
+                  handleDeleteUser={this.handleDeleteUser}
+                />
+              </div>
             </div>
           ) : (
             <LoadingSpinner />
