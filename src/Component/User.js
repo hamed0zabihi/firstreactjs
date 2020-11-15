@@ -101,6 +101,10 @@ class User extends Component {
     if (av === "a-z") {
       bands.sort((a, b) => a["login"].toLowerCase() > b["login"].toLowerCase());
       this.setState({ userData: bands });
+    }
+    if (av === "defualt") {
+      bands.sort((a, b) => (a.id > b.id ? 1 : -1));
+      this.setState({ userData: bands });
     } else {
       bands.sort((a, b) => a["login"].toLowerCase() < b["login"].toLowerCase());
       this.setState({ userData: bands });
@@ -147,6 +151,7 @@ class User extends Component {
                     id="exampleSelect"
                     onChange={(e) => this.sortArray(e.target.value)}
                   >
+                    <option>defualt</option>
                     <option>a-z</option>
                     <option>z-a</option>
                   </Input>
