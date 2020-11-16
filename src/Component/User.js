@@ -101,18 +101,16 @@ class User extends Component {
     if (av === "a-z") {
       bands.sort((a, b) => a["login"].toLowerCase() > b["login"].toLowerCase());
       this.setState({ userData: bands });
-    }
-    if (av === "defualt") {
+    } else if (av === "defualt") {
       bands.sort((a, b) => (a.id > b.id ? 1 : -1));
       this.setState({ userData: bands });
     } else {
       bands.sort((a, b) => a["login"].toLowerCase() < b["login"].toLowerCase());
       this.setState({ userData: bands });
     }
-
+    console.log("av:", av);
     console.log("first:", this.state.userData);
     console.log("second:", bands);
-    console.log("av:", av);
   };
 
   render() {
